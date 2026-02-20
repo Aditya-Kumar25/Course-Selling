@@ -1,16 +1,12 @@
 import express from "express";
-import {router} from "./routes/authroutes.ts"
-import { PrismaClient } from "./generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
-
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
-});
-
-export const prisma = new PrismaClient({ adapter });
+import {authrouter} from "./routes/authroutes.ts"
 
 const app = express();
 
-app.use("/", router)
+app.use(express.json())
 
-app.listen(3000)
+app.use("/", authrouter)
+
+app.listen(3000 , ()=>{
+  console.log("Server is running on port http://127.0.0.1:3000")
+})

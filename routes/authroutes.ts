@@ -1,13 +1,10 @@
 import express from "express";
 import {SignUp} from "../controllers/SignUp"
-export const router = express.Router()
+import { LogIn } from "../controllers/LogIn";
+export const authrouter = express.Router()
 
 
-// define the home page route
-router.get('/auth/signup',SignUp)
-// define the about route
-router.get('/about', (req, res) => {
-  res.send('About birds')
-})
+authrouter.post('/auth/signup',SignUp)
+authrouter.post('/auth/login', LogIn)
 
 
