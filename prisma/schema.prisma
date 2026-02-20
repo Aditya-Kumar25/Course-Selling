@@ -19,11 +19,55 @@ enum Role{
 }
 
 model User{
-  id            String      @id@default(cuid())
+  id            String      @id @default(cuid())
   name          String
   email         String      @unique
   password      String
   role          Role
     
   createdAt     DateTime    @default(now())   
+
+  course        Course[]    
+  purchases     Purchase[]
+}
+
+model Course{
+  id            String      @id @default(cuid())
+  title         String      
+  descrption    String?
+  price         Int
+
+  instuctor     User      @relation(fields:[instructorId],references: [id])
+  instructorId  String
+  
+  lessons       Lesson[]
+  purchases     Purchase[]
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now())
+  
+}
+
+model Lesson{
+  id          String      @id @default(cuid())
+  title       String      
+  content     String
+  
+  course      Course      @relation(fields: [courseId],references: [id])
+  courseId    String
+
+  createdAt   DateTime    @default(now())
+}
+
+model Purchase{
+  id          String      @id @default(cuid())
+
+  userId      String
+  courseId    String
+
+  user        User        @relation(fields: [userId],references: [id])
+  
+  course      Course      @relation(fields: [courseId],references: [id])
+
+  @@unique([userId,courseId])
 }
