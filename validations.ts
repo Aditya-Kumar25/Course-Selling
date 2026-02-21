@@ -1,14 +1,30 @@
 import { password } from "bun";
 import {email, z} from "zod";
 
-export const signup = z.object({
+export const signupSchema = z.object({
     name:z.string().min(1,"name is required"),
     email:z.string(),
     password:z.string(),
     role:z.string()
 })
 
-export const login = z.object({
+export const loginSchema = z.object({
     email:z.string(),
     password:z.string()
+})
+
+export const createCourseSchema = z.object({
+    title : z.string(),
+    description : z.string(),
+    price : z.number()
+})
+
+export const craeteLessonSchema = z.object({
+    title : z.string(),
+    description : z.string(),
+    courseId : z.string()
+})
+
+export const purchaseSchema = z.object({
+    courseId : z.string()
 })

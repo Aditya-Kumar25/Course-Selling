@@ -1,12 +1,12 @@
 import {type Request,type Response} from "express";
-import {signup} from "../validations.ts"
+import {signupSchema} from "../../validations.ts"
 import bcrypt from "bcrypt";
-import {prisma} from "../globalprisma.ts"
+import {prisma} from "../../globalprisma.ts"
 
 export async function SignUp(req:Request,res:Response){
 
     const payload = req.body;
-    const parsed  = signup.safeParse(payload);
+    const parsed  = signupSchema.safeParse(payload);
 
     console.log(parsed);
 

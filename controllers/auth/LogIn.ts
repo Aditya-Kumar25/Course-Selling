@@ -1,12 +1,12 @@
 import {type Request, type Response} from "express";
-import {login} from "../validations";
+import {loginSchema} from "../../validations.ts";
 import bcrypt from "bcrypt";
-import {prisma} from "../globalprisma.ts";
+import {prisma} from "../../globalprisma.ts";
 import jwt from "jsonwebtoken";
 import { success } from "zod";
 
 export async function LogIn(req : Request,res:Response){
-    const parsed = login.safeParse(req.body);
+    const parsed = loginSchema.safeParse(req.body);
 
     if(!parsed.success){
         return res.status(400).json({
