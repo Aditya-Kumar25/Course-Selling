@@ -2,13 +2,12 @@ import {type Request,type Response} from "express";
 import {signupSchema} from "../../validations.ts"
 import bcrypt from "bcrypt";
 import {prisma} from "../../globalprisma.ts"
+import { password } from "bun";
 
 export async function SignUp(req:Request,res:Response){
 
     const payload = req.body;
     const parsed  = signupSchema.safeParse(payload);
-
-    console.log(parsed);
 
     if(!parsed.success){
         return res.status(400).json({
@@ -29,7 +28,7 @@ export async function SignUp(req:Request,res:Response){
 
     try {
         const hash = await bcrypt.hash(payload.password,10);
-        console.log("dj")
+    
         const user = await prisma.user.create({
             data:{
                 name:req.body.name,
@@ -39,8 +38,15 @@ export async function SignUp(req:Request,res:Response){
             }
         })
         
-        return res.status(201).json({
-            msg:"user created"
+        return res.status(200).json({
+            success:true,
+            data:{
+                email:user.email,
+                password,
+                name:user.name,
+                role:user.role
+            },
+            error:null
         })
 
     } catch (error) {

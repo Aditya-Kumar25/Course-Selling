@@ -14,8 +14,8 @@ datasource db {
 }
 
 enum Role{
-  student
-  instructor
+  STUDENT
+  INSTRUCTOR
 }
 
 model User{

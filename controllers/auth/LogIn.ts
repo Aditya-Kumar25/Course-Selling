@@ -3,7 +3,7 @@ import {loginSchema} from "../../validations.ts";
 import bcrypt from "bcrypt";
 import {prisma} from "../../globalprisma.ts";
 import jwt from "jsonwebtoken";
-import { success } from "zod";
+
 
 export async function LogIn(req : Request,res:Response){
     const parsed = loginSchema.safeParse(req.body);
@@ -28,7 +28,7 @@ export async function LogIn(req : Request,res:Response){
         })
     }
 
-    const pwd = bcrypt.compare(parsed.data.password,us.password);
+    const pwd = await bcrypt.compare(parsed.data.password,us.password);
     if(!pwd){
         return res.status(401).json({
             success:false,
@@ -44,10 +44,9 @@ export async function LogIn(req : Request,res:Response){
         process.env.JWT_SECRET as string,
         {expiresIn : "1d"},
     );
-
+    
     res.json({
-        success:true,
-        data:{
+        
             token,
             user:{
             id:us.id,
@@ -55,7 +54,5 @@ export async function LogIn(req : Request,res:Response){
             email:us.email,
             role:us.role
             },
-        },
-        error : null
     })
 }

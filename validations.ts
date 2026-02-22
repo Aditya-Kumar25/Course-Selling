@@ -15,11 +15,11 @@ export const loginSchema = z.object({
 
 export const createCourseSchema = z.object({
     title : z.string(),
-    description : z.string(),
+    content : z.string(),
     price : z.number()
 })
 
-export const craeteLessonSchema = z.object({
+export const createLessonSchema = z.object({
     title : z.string(),
     description : z.string(),
     courseId : z.string()
