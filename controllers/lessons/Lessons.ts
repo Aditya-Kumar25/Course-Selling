@@ -7,14 +7,13 @@ import { createLessonSchema } from "../../validations";
 export async function Lesson(req: Request,res : Response){
     const user = (req as any).user;
 
-    console.log("flag-A")
-    if(!user || user.role !== "INSTRUCTOR"){
+    if(user.role != "INSTRUCTOR"){
         return res.status(403).json({
             success:false,
             error : "FORBIDDEN"
         })
     }
-    console.log("Flag-B")
+
 
     const parsed = createLessonSchema.safeParse(req.body);
     if(!parsed.success){
@@ -38,13 +37,13 @@ export async function Lesson(req: Request,res : Response){
         })
     }
     
-    console.log("flag2")
+
     if(course.instructorId != user.id){
         return res.status(403).json({
             error:"FORBIDDEN"
         })
     }
-    console.log("falg3")
+
 
     const lesson = await prisma.lesson.create(({
         data:{
@@ -64,3 +63,15 @@ export async function Lesson(req: Request,res : Response){
     }
     
 } 
+
+export async function getLessons(req:Request,res:Response){
+    const {courseId} = req.params as any;
+
+    const lessons = await prisma.lesson.findMany({
+        where:{
+            courseId:courseId
+        }
+    })
+
+    return res.status(200).json(lessons)
+}

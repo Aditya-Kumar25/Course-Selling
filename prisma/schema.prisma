@@ -34,17 +34,17 @@ model User{
 model Course{
   id            String      @id @default(cuid())
   title         String      
-  descrption    String?
+  description   String?
   price         Int
 
-  instuctor     User      @relation(fields:[instructorId],references: [id])
+  instructor     User      @relation(fields:[instructorId],references: [id])
   instructorId  String
   
   lessons       Lesson[]
   purchases     Purchase[]
 
   createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   
 }
 

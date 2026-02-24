@@ -1,5 +1,4 @@
-import { password } from "bun";
-import {email, z} from "zod";
+import { z} from "zod";
 
 export const signupSchema = z.object({
     name:z.string().min(1,"name is required"),
@@ -15,13 +14,13 @@ export const loginSchema = z.object({
 
 export const createCourseSchema = z.object({
     title : z.string(),
-    content : z.string(),
+    description : z.string(),
     price : z.number()
 })
 
 export const createLessonSchema = z.object({
     title : z.string(),
-    description : z.string(),
+    content : z.string(),
     courseId : z.string()
 })
 
