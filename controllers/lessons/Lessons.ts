@@ -1,4 +1,4 @@
-import e, {type Request,type Response} from "express";
+import  {type Request,type Response} from "express";
 import {prisma} from "../../globalprisma"
 import { createLessonSchema } from "../../validations";
 
@@ -75,3 +75,4 @@ export async function getLessons(req:Request,res:Response){
 
     return res.status(200).json(lessons)
 }
+
