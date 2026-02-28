@@ -42,3 +42,10 @@ export async function Purchase(req : Request, res : Response){
         }
     })
 }
+
+export async function purchaseget(params:type) {
+    
+}
+
+
+
